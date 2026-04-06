@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"/Users/facundogonzalo/TRABAJO/Clientes/KAIROS/LANDING PAGE/kairos/css\")",
+      "Bash(mkdir -p \"/Users/facundogonzalo/TRABAJO/Clientes/KAIROS/LANDING PAGE/kairos/js\")"
+    ]
+  }
+}

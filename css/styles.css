@@ -1,0 +1,1803 @@
+/* ============================================================
+   KAIROS Skills — styles.css
+   Fuente de verdad visual: BRAND.md
+   Sin border-radius. Sin colores hardcodeados. Sin librerías.
+============================================================ */
+
+/* ============================================================
+   1. Custom Properties
+============================================================ */
+:root {
+  /* Fondos */
+  --cream:       #F4F4F6;
+  --black:       #0d0d0d;
+
+  /* Azules de marca */
+  --blue-deep:   #2F4F6C;
+  --blue-mid:    #345F8C;
+  --blue-light:  #749CBB;
+
+  /* Dorado */
+  --gold:        #D1B254;
+  --gold-hover:  #e6c76a;
+
+  /* Neutros */
+  --gray:        #D9D9D6;
+  --white:       #ffffff;
+
+  /* Sistema */
+  --container-max: 1200px;
+  --container-pad: 80px;
+
+  /* Tipografías */
+  --font-display: 'The Season', 'Cormorant Garamond', serif;
+  --font-accent:  'Pinyon Script', 'Cormorant Garamond', cursive;
+  --font-ui:      'Poppins', sans-serif;
+
+  /* Overlay estándar para fotos de fondo */
+  --overlay: linear-gradient(
+    160deg,
+    rgba(8, 18, 30, .94)  0%,
+    rgba(20, 50, 75, .88) 50%,
+    rgba(8, 18, 30, .94)  100%
+  );
+
+  /* Cursor */
+  --cursor-dot-size:  8px;
+  --cursor-ring-size: 36px;
+}
+
+/* ============================================================
+   2. @font-face — The Season
+============================================================ */
+@font-face {
+  font-family: 'The Season';
+  src: url('../assets/Fonts/fonnts.com-theseasons-reg.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'The Season';
+  src: url('../assets/Fonts/fonnts.com-theseasons-bd.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'The Season';
+  src: url('../assets/Fonts/fonnts.com-theseasons-it.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Pinyon Script';
+  src: url('../assets/Fonts/PinyonScript-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================================================
+   3. Reset & Base
+============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-radius: 0 !important;
+}
+
+html {
+  scroll-behavior: smooth;
+  cursor: none;
+}
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-ui);
+  font-weight: 300;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  cursor: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button {
+  cursor: none;
+}
+
+/* ============================================================
+   4. Custom Cursor
+============================================================ */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  will-change: left, top;
+}
+
+.cursor-dot {
+  width: var(--cursor-dot-size);
+  height: var(--cursor-dot-size);
+  background: var(--gold);
+}
+
+.cursor-ring {
+  width: var(--cursor-ring-size);
+  height: var(--cursor-ring-size);
+  border: 1.5px solid var(--gold);
+  opacity: 0.65;
+  transition: width .25s cubic-bezier(.16,1,.3,1),
+              height .25s cubic-bezier(.16,1,.3,1),
+              opacity .25s;
+}
+
+.cursor-ring.hover {
+  width: 60px;
+  height: 60px;
+  opacity: 0.45;
+}
+
+/* ============================================================
+   5. Tipografía — escala
+============================================================ */
+.display-xl {
+  font-family: var(--font-display);
+  font-size: clamp(35px, 4.5vw, 45px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -.02em;
+}
+
+.display-lg {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5vw, 55px);
+  font-weight: 400;
+  line-height: 1.0;
+  letter-spacing: -.015em;
+}
+
+.display-md {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 38px);
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.eyebrow {
+  font-family: var(--font-ui);
+  font-size: 9px;
+  letter-spacing: 4.5px;
+  text-transform: uppercase;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 24px;
+}
+
+.body-lg {
+  font-size: 15px;
+  line-height: 2.0;
+  font-weight: 300;
+}
+
+.body-md {
+  font-size: 11px;
+  line-height: 1.9;
+  font-weight: 300;
+}
+
+.caption {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  font-weight: 400;
+}
+
+/* ============================================================
+   6. Container
+============================================================ */
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+}
+
+/* ============================================================
+   7. Scroll Reveal
+============================================================ */
+.rv {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity .95s cubic-bezier(.16, 1, .3, 1),
+              transform .95s cubic-bezier(.16, 1, .3, 1);
+}
+
+.rv.on {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.d1 { transition-delay: .1s; }
+.d2 { transition-delay: .2s; }
+.d3 { transition-delay: .3s; }
+.d4 { transition-delay: .4s; }
+
+/* ============================================================
+   8. Botones
+============================================================ */
+.btn {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  padding: 18px 48px;
+  cursor: none;
+  transition: background .25s ease, color .25s ease;
+  border: none;
+  outline: none;
+}
+
+.btn-cta {
+  background: var(--gold);
+  color: var(--black);
+}
+
+.btn-cta:hover {
+  background: var(--gold-hover);
+}
+
+
+/* ============================================================
+   9. Header fijo solo-logo
+============================================================ */
+#site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 0;
+  transition: padding .4s ease, background .4s ease,
+              backdrop-filter .4s ease;
+}
+
+#site-header.scrolled {
+  padding: 12px 0;
+  background: rgba(240, 238, 234, .92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0, 0, 0, .06);
+}
+
+#site-header.scrolled .header-logo {
+  height: 32px;
+}
+
+.header-logo {
+  height: 40px;
+  width: auto;
+  transition: height .4s ease;
+}
+
+/* ============================================================
+   10. Sol decorativo — animación
+============================================================ */
+@keyframes sol-pulse {
+  0%,  100% { opacity: .14; transform: scale(1); }
+  50%        { opacity: .22; transform: scale(1.05); }
+}
+
+/* ============================================================
+   11. Hero
+============================================================ */
+
+/*
+  Técnica de split background:
+  - .hero-top     → background fondo_heroes.webp, pb generoso para que el VSL la superponga
+  - .hero-vsl-outer → margin-top negativo para quedar partido entre las dos secciones
+  - .hero-bottom  → background --cream, pt generoso para dejar espacio al VSL
+*/
+
+.section-hero {
+  position: relative;
+}
+
+/* --- Bloque superior ---------------------------------------- */
+.hero-top {
+  background: url('../assets/imagenes/fondo_heroes.webp') center top / auto 100% no-repeat;
+  padding-top: 100px;
+  padding-bottom: 240px; /* 214px ≈ mitad del VSL a 760px + 26px respiración */
+  text-align: center;
+  color: var(--black);
+}
+
+.hero-top-content {
+  /* usa .container — nada extra */
+}
+
+.hero-logo {
+  display: inline-block;
+  margin-bottom: 48px;
+}
+
+.hero-logo-img {
+  height: 80px;
+  width: auto;
+  margin: 0 auto;
+}
+
+.hero-top .eyebrow {
+  color: var(--gold);
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+.hero-top h1 {
+  max-width: 950px;
+  margin: 0 auto 28px;
+  color: var(--white);
+}
+
+.hero-sub {
+  max-width: 820px;
+  margin: 0 auto;
+  color: rgba(13, 13, 13, .72);
+}
+
+.hero-sub-muted {
+  color: rgba(13, 13, 13, .42);
+  margin-top: 1px;
+  margin-bottom: 40px;
+}
+
+/* --- VSL partido ---------------------------------------------- */
+.hero-vsl-outer {
+  padding: 0 var(--container-pad);
+  display: flex;
+  justify-content: center;
+  margin-top: -214px;
+  margin-bottom: -180px;
+  position: relative;
+  z-index: 10;
+}
+
+.hero-vsl-frame {
+  width: 100%;
+  max-width: 550px;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  background: var(--black);
+  border: 1px solid rgba(0, 0, 0, .1);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, .15);
+  overflow: hidden;
+}
+
+.hero-vsl-play {
+  font-size: 52px;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.hero-vsl-label {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(13, 13, 13, .35);
+}
+
+/* --- Bloque inferior ----------------------------------------- */
+.hero-bottom {
+  background: var(--cream);
+  padding-top: 204px;  /* 214px ≈ mitad VSL + 40px espacio al CTA */
+  padding-bottom: 100px;
+  text-align: center;
+}
+
+.hero-bottom .btn {
+  display: inline-block;
+  margin-bottom: 28px;
+}
+
+.hero-bottom-sub {
+  max-width: 150px;
+  margin: 0 auto;
+  font-size: 12px;
+  line-height: 1.85;
+  color: rgba(13, 13, 13, .45);
+}
+
+/* --- Ticker (compartido con Scarcity bar) -------------------- */
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.ticker-track {
+  display: flex;
+  gap: 48px;
+  white-space: nowrap;
+  width: max-content;
+  animation: ticker-scroll 24s linear infinite;
+}
+
+.ticker-track span {
+  font-family: var(--font-ui);
+  font-size: 9px;
+  letter-spacing: 4.5px;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--gold);
+}
+
+.ticker-sep {
+  opacity: .35;
+}
+
+/* ============================================================
+   12. Opportunity
+============================================================ */
+.section-opportunity {
+  background: var(--cream);
+  color: var(--black);
+}
+
+/* --- Bloque 1: texto centrado -------------------------------- */
+.opp-block1 {
+  padding: 80px 0;
+  text-align: center;
+}
+
+.opp-block1 h2 {
+  margin-bottom: 32px;
+  color: var(--black);
+}
+
+.opp-center-text {
+  max-width: 680px;
+  margin: 0 auto 18px;
+}
+
+.opp-accent-quote {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: clamp(22px, 2.5vw, 36px);
+  color: var(--blue-mid);
+  margin: 32px auto;
+  display: block;
+}
+
+.opp-sello {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin: 24px auto 0;
+  display: block;
+}
+
+/* --- Bloque 2: foto full width ------------------------------- */
+.opp-fullwidth {
+  width: 100%;
+  height: 70vh;
+  overflow: hidden;
+}
+
+.opp-fullwidth-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* --- Bloque 3: dos columnas ---------------------------------- */
+/* --- Bloque 3: split columns con foto solapada --------------- */
+.opp-split {
+  position: relative;
+  display: flex;
+  min-height: 600px;
+}
+
+.opp-split-left {
+  width: 65%;
+  background: rgba(240, 238, 234, .92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 150px 190px 90px 200px;
+  color: var(--black);
+}
+
+.opp-split-title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 3.5vw, 48px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -.015em;
+  color: var(--black);
+  margin-bottom: 28px;
+}
+
+.opp-split-left .body-lg {
+  margin-bottom: 20px;
+}
+
+.opp-snell-quote {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: clamp(28px, 3.5vw, 52px);
+  color: var(--blue-mid);
+  line-height: 1.2;
+  margin: 20px 0 0;
+}
+
+.opp-split-right {
+  width: 35%;
+  /* gradiente cream tapando los primeros 120px, imagen arranca debajo */
+  background:
+    linear-gradient(to bottom, var(--cream) 0px, transparent 0px),
+    url('../assets/imagenes/fondo2.webp') center / cover no-repeat;
+  min-height: 500px;
+}
+
+.opp-bresser-photo {
+  position: absolute;
+  top: 130px;
+  left: 56%;
+  transform: translateX(-50%);
+  width: 260px;
+  height: auto;
+  object-fit: cover;
+  object-position: center top;
+  z-index: 10;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .2);
+}
+
+/* estampilla — conservada para sección fundador */
+.estampilla {
+  position: absolute;
+  bottom: -24px;
+  right: -24px;
+  width: 140px;
+  height: auto;
+  opacity: .9;
+  transform: rotate(-10deg);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* ============================================================
+   13. Brand Story
+============================================================ */
+.section-brand-story {
+  padding: 140px 0;
+  background:
+    var(--overlay),
+    url('../assets/imagenes/fondo2.webp') center / cover no-repeat;
+  color: var(--white);
+}
+
+.bs-grid {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+/* Foto izquierda */
+.bs-photo-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.bs-photo {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  outline: 5px solid var(--white);
+  outline-offset: 0;
+}
+
+.bs-estampilla {
+  position: absolute;
+  bottom: -16px;
+  right: -16px;
+  width: 130px;
+  height: auto;
+  opacity: .92;
+  transform: rotate(-10deg);
+  pointer-events: none;
+}
+
+/* Texto derecha */
+.bs-text .eyebrow {
+  color: var(--gold);
+}
+
+.bs-text h2 {
+  margin-bottom: 32px;
+  color: var(--white);
+}
+
+.bs-text .body-lg {
+  margin-bottom: 24px;
+  opacity: .85;
+}
+
+.bs-subtitle {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 1.9;
+  font-weight: 300;
+  opacity: .65;
+  color: var(--white);
+}
+
+/* ============================================================
+   14. Método KAIROS
+============================================================ */
+.section-metodo {
+  padding: 140px 0 200px;
+  background:
+    var(--overlay),
+    url('../assets/imagenes/fondo3.webp') center / cover no-repeat;
+  color: var(--white);
+}
+
+.section-metodo .eyebrow {
+  color: var(--gold);
+  text-align: center;
+}
+
+.section-metodo h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.metodo-desc {
+  max-width: 640px;
+  margin-bottom: 80px;
+  opacity: .8;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.metodo-steps {
+  display: flex;
+  flex-direction: column;
+  /* cada card tiene 300px de "zona de scroll" antes de que la siguiente la tape */
+  gap: 0;
+}
+
+.step-card {
+  position: sticky;
+  top: calc(100px + var(--card-index) * 20px);
+  z-index: calc(10 + var(--card-index));
+  padding: 56px 64px;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid rgba(255, 255, 255, .1);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+/* Overlay oscuro encima de la imagen para legibilidad */
+.step-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 18, 30, .78);
+  z-index: 0;
+}
+
+/* El contenido va encima del overlay */
+.step-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Imágenes por card */
+.step-card[style*="--card-index: 0"] {
+  background-image: url('../assets/imagenes/03.webp');
+}
+.step-card[style*="--card-index: 1"] {
+  background-image: url('../assets/imagenes/01.webp');
+}
+.step-card[style*="--card-index: 2"] {
+  background-image: url('../assets/imagenes/02.webp');
+}
+.step-card[style*="--card-index: 3"] {
+  background-image: url('../assets/imagenes/04.webp');
+}
+
+/* espacio mínimo para que haya scroll entre cada card */
+.step-card { margin-bottom: 24px;
+}
+
+.step-card:last-child {
+  margin-bottom: 0;
+}
+
+.step-num {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 5vw, 72px);
+  color: var(--gold);
+  opacity: .35;
+  line-height: 1;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.step-title {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.5vw, 36px);
+  color: var(--white);
+  margin-bottom: 16px;
+  line-height: 1.1;
+}
+
+.step-card .body-lg {
+  color: rgba(255, 255, 255, .72);
+  max-width: 680px;
+}
+
+/* ============================================================
+   15. Empathy / Fundador
+============================================================ */
+.section-fundador {
+  background: var(--cream);
+  color: var(--black);
+  padding: 140px 0;
+}
+
+.section-fundador .eyebrow {
+  color: var(--gold);
+}
+
+.fundador-grid {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 100px;
+  align-items: center;
+}
+
+.fundador-photo-wrap {
+  position: relative;
+}
+
+.fundador-photo-img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.fundador-photo-wrap .estampilla {
+  mix-blend-mode: multiply;
+}
+
+.fundador-content {
+  max-width: 580px;
+}
+
+.pull-quote-large {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: clamp(26px, 3vw, 46px);
+  line-height: 1.35;
+  color: var(--blue-mid);
+  border-left: 3px solid var(--gold);
+  padding-left: 40px;
+  margin: 40px 0;
+}
+
+/* ============================================================
+   16. Módulos
+============================================================ */
+.section-modulos {
+  padding: 140px 0;
+  background:
+    var(--overlay),
+    url('../assets/imagenes/fondo2.webp') center / cover no-repeat;
+  color: var(--white);
+}
+
+.section-modulos .eyebrow {
+  color: var(--gold);
+}
+
+.section-modulos h2 {
+  margin-bottom: 16px;
+}
+
+.modulos-intro {
+  max-width: 640px;
+  margin-bottom: 80px;
+  opacity: .8;
+}
+
+.modulos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-bottom: 2px;
+}
+
+.modulo-card {
+  padding: 48px 40px;
+  background: rgba(244, 244, 246, .6);
+  border: 1px solid rgba(255, 255, 255, .18);
+  transition: background .3s;
+}
+
+.modulo-card:hover {
+  background: var(--cream);
+}
+
+.modulo-icon {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  display: block;
+  margin-bottom: 20px;
+  opacity: .85;
+}
+
+.modulo-title {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2vw, 26px);
+  color: var(--black);
+  margin-bottom: 16px;
+  line-height: 1.15;
+}
+
+.modulo-card .body-md {
+  color: rgba(13, 13, 13, .65);
+}
+
+/* Bonus card */
+.bonus-card {
+  background: rgba(209, 178, 84, .07);
+  border: 1px solid rgba(209, 178, 84, .45);
+  padding: 48px;
+  display: flex;
+  align-items: flex-start;
+  gap: 48px;
+}
+
+.bonus-header {
+  flex-shrink: 0;
+  min-width: 200px;
+}
+
+.bonus-badge {
+  font-family: var(--font-ui);
+  font-size: 9px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.bonus-title {
+  font-size: clamp(22px, 2.5vw, 36px);
+  color: var(--white);
+}
+
+.bonus-card .body-lg {
+  color: rgba(255, 255, 255, .75);
+}
+
+/* ============================================================
+   17. Resultados
+============================================================ */
+.section-resultados {
+  background: var(--cream);
+  color: var(--black);
+  padding: 100px 0;
+}
+
+.section-resultados .eyebrow {
+  color: var(--blue-mid);
+}
+
+.resultados-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.resultados-col-text h2 {
+  margin-bottom: 16px;
+}
+
+.resultados-col-text .body-lg {
+  opacity: .75;
+  margin-bottom: 12px;
+}
+
+.resultados-coda {
+  margin: 28px 0 36px;
+}
+
+.resultados-coda .body-lg {
+  margin-bottom: 10px;
+}
+
+.resultados-accent {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 22px;
+  color: var(--blue-mid);
+}
+
+.resultados-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+}
+
+.resultado-card {
+  padding: 32px 28px;
+  background: var(--white);
+  border: 1px solid var(--gray);
+}
+
+.resultado-stat {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 2.5vw, 40px);
+  color: var(--blue-mid);
+  margin-bottom: 10px;
+  line-height: 1;
+}
+
+.resultado-card .body-md {
+  color: rgba(13, 13, 13, .65);
+}
+
+/* ============================================================
+   18. Testimonios
+============================================================ */
+/* ============================================================
+   TESTIMONIOS EN VIDEO
+============================================================ */
+.section-testimonios-video {
+  padding: 140px 0;
+  background:
+    linear-gradient(160deg, rgba(8,18,30,.94) 0%, rgba(20,50,75,.88) 50%, rgba(8,18,30,.94) 100%),
+    url('../assets/imagenes/Background-Kairos_03.webp') center / cover no-repeat;
+  color: var(--white);
+}
+
+.tv-eyebrow {
+  display: block;
+  text-align: center;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+
+.tv-title {
+  text-align: center;
+  color: var(--white);
+  margin-bottom: 72px;
+}
+
+.tv-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.tv-card {
+  display: grid;
+  grid-template-columns: 55% 45%;
+  align-items: stretch;
+  border: 1px solid rgba(255, 255, 255, .08);
+  background: rgba(255, 255, 255, .04);
+  transition: border-color .4s ease;
+}
+
+.tv-card:hover {
+  border-color: rgba(209, 178, 84, .25);
+}
+
+.tv-video {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.tv-video::before {
+  content: '';
+  display: block;
+  padding-top: 56.25%; /* 16:9 */
+}
+
+.tv-video iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.tv-text {
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.tv-text .eyebrow {
+  margin-bottom: -16px;
+}
+
+.tv-name {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2vw, 26px);
+  font-weight: 400;
+  color: var(--white);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.tv-result {
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, .5);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.tv-quote {
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-size: clamp(13px, 1.4vw, 15px);
+  font-weight: 300;
+  color: rgba(255, 255, 255, .7);
+  line-height: 1.8;
+  margin: 0;
+}
+
+.section-testimonios {
+  padding: 140px 0;
+  background:
+    var(--overlay),
+    url('../assets/imagenes/fondo3.webp') center / cover no-repeat;
+  color: var(--white);
+}
+
+.section-testimonios .eyebrow {
+  color: var(--gold);
+}
+
+.section-testimonios h2 {
+  margin-bottom: 64px;
+}
+
+.testimonios-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.testimonio-card {
+  padding: 48px;
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid rgba(255, 255, 255, .08);
+  min-height: 300px;
+}
+
+/* ============================================================
+   19. Offer Stack
+============================================================ */
+.section-offer {
+  background: var(--black);
+  color: var(--white);
+  padding: 140px 0;
+}
+
+.section-offer .eyebrow {
+  color: var(--gold);
+}
+
+.section-offer h2 {
+  margin-bottom: 64px;
+  max-width: 700px;
+}
+
+.offer-list {
+  margin-bottom: 64px;
+  max-width: 720px;
+}
+
+.offer-list ul {
+  list-style: none;
+}
+
+.offer-list li {
+  padding: 22px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, .08);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: rgba(255, 255, 255, .85);
+}
+
+.offer-list li::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+.offer-bonus-item {
+  color: var(--gold) !important;
+  font-weight: 500 !important;
+}
+
+.offer-scarcity {
+  max-width: 640px;
+  margin-bottom: 56px;
+}
+
+.offer-scarcity .body-lg {
+  margin-bottom: 16px;
+  opacity: .75;
+}
+
+/* ============================================================
+   20. Objeciones
+============================================================ */
+/* ============================================================
+   Proceso / Calendly
+============================================================ */
+.section-proceso {
+  background: var(--cream);
+  color: var(--black);
+  padding: 140px 0;
+}
+
+.proceso-header {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-bottom: 72px;
+}
+
+.proceso-header .eyebrow {
+  color: var(--blue-mid);
+  white-space: nowrap;
+}
+
+.proceso-divider {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--gold), transparent);
+}
+
+.proceso-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+  margin-bottom: 64px;
+}
+
+.proceso-text h2 {
+  line-height: 1;
+  margin-bottom: 40px;
+}
+
+.proceso-mockup {
+  width: 100%;
+  max-width: 480px;
+  display: block;
+}
+
+.proceso-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.proceso-step {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+}
+
+.proceso-step-num {
+  font-family: var(--font-display);
+  font-size: 36px;
+  color: var(--gold);
+  opacity: .5;
+  line-height: 1;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.proceso-step .body-lg {
+  margin-bottom: 8px;
+}
+
+.proceso-step .body-md {
+  opacity: .65;
+}
+
+.proceso-accent {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.proceso-accent .accent {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: clamp(24px, 3vw, 40px);
+  color: var(--blue-deep);
+  opacity: .75;
+}
+
+.proceso-list {
+  list-style: none;
+  margin-top: 12px;
+}
+
+.proceso-list li {
+  padding: 5px 0 5px 24px;
+  position: relative;
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.9;
+  opacity: .8;
+}
+
+.proceso-list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+}
+
+.calendly-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  height: 565px;
+  background: var(--white);
+  border: 1px solid var(--gray);
+  overflow: hidden;
+}
+
+.calendly-wrap iframe,
+#cal-booking-place iframe {
+  width: 100% !important;
+  height: 100% !important;
+  border: none !important;
+  display: block;
+}
+
+#cal-booking-place {
+  width: 100%;
+  height: 100%;
+}
+
+/* Placeholder visual mientras no está el embed */
+.calendly-wrap:empty::after {
+  content: 'CALENDLY: reemplazar con el embed de Calendly';
+  font-family: var(--font-ui);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(13, 13, 13, .25);
+}
+
+.section-objeciones .eyebrow {
+  color: var(--blue-mid);
+}
+
+.section-objeciones h2 {
+  margin-bottom: 64px;
+}
+
+.objeciones-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+
+.objecion {
+  padding: 56px 48px;
+  background: var(--white);
+  border: 1px solid var(--gray);
+}
+
+.objecion-title {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2vw, 30px);
+  color: var(--black);
+  margin-bottom: 28px;
+  line-height: 1.15;
+}
+
+.objecion .body-lg {
+  margin-bottom: 12px;
+  opacity: .8;
+}
+
+.objecion-list {
+  list-style: none;
+  margin-top: 12px;
+}
+
+.objecion-list li {
+  padding: 6px 0 6px 24px;
+  position: relative;
+  font-size: 15px;
+  font-weight: 300;
+  opacity: .8;
+}
+
+.objecion-list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+}
+
+/* ============================================================
+   21. Garantía
+============================================================ */
+.section-garantia {
+  padding: 140px 0;
+  background:
+    var(--overlay),
+    url('../assets/imagenes/fondo1.webp') center / cover no-repeat;
+  color: var(--white);
+}
+
+.section-garantia .eyebrow {
+  color: var(--gold);
+}
+
+.garantia-wrap {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+}
+
+.garantia-badge {
+  flex-shrink: 0;
+  width: 180px;
+  height: 180px;
+  border: 2px solid var(--gold);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 16px;
+}
+
+.garantia-num {
+  font-family: var(--font-display);
+  font-size: 72px;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.garantia-label {
+  font-family: var(--font-ui);
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+  margin-top: 6px;
+}
+
+.garantia-text {
+  max-width: 600px;
+}
+
+.garantia-text h2 {
+  margin-bottom: 24px;
+}
+
+.garantia-text .body-lg {
+  opacity: .8;
+}
+
+/* ============================================================
+   22. FAQ
+============================================================ */
+.section-faq {
+  background: var(--cream);
+  color: var(--black);
+  padding: 140px 0;
+}
+
+.section-faq .eyebrow {
+  color: var(--blue-mid);
+}
+
+.section-faq h2 {
+  margin-bottom: 64px;
+}
+
+.faq-list {
+  max-width: 820px;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--gray);
+}
+
+.faq-item:first-of-type {
+  border-top: 1px solid var(--gray);
+}
+
+.faq-question {
+  padding: 28px 0;
+  font-family: var(--font-ui);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: none;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  color: var(--black);
+  transition: color .25s;
+}
+
+.faq-question::-webkit-details-marker {
+  display: none;
+}
+
+.faq-question::after {
+  content: '+';
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--gold);
+  flex-shrink: 0;
+  transition: transform .35s cubic-bezier(.16,1,.3,1);
+}
+
+.faq-item[open] .faq-question::after {
+  transform: rotate(45deg);
+}
+
+.faq-answer {
+  padding-bottom: 32px;
+  padding-right: 40px;
+  font-size: 13px;
+  line-height: 1.9;
+  font-weight: 300;
+  color: rgba(13, 13, 13, .7);
+}
+
+/* ============================================================
+   23. Final CTA
+============================================================ */
+.section-cta-final {
+  padding: 140px 0;
+  background:
+    linear-gradient(160deg, rgba(8,18,30,.90) 0%, rgba(20,50,75,.82) 50%, rgba(8,18,30,.90) 100%),
+    url('../assets/imagenes/mockups_Kaios.webp') center / cover no-repeat;
+  color: var(--white);
+}
+
+.section-cta-final .container {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 100px;
+  align-items: center;
+}
+
+.cta-final-content h2 {
+  margin-bottom: 32px;
+}
+
+.cta-final-content .body-lg {
+  margin-bottom: 14px;
+  opacity: .85;
+}
+
+.cta-final-content .btn {
+  margin-top: 40px;
+}
+
+.cta-final-mockup .mockup-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* ============================================================
+   24. Scarcity Bar
+============================================================ */
+.scarcity-bar {
+  background: var(--gold);
+  overflow: hidden;
+  padding: 18px 0;
+}
+
+.ticker-dark span {
+  color: var(--black) !important;
+  font-weight: 600 !important;
+}
+
+/* ============================================================
+   25. Footer
+============================================================ */
+.footer {
+  background: var(--cream);
+  color: var(--black);
+  padding: 80px 0;
+  border-top: 1px solid var(--gray);
+}
+
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+
+.footer-logo-img {
+  height: 36px;
+  width: auto;
+  filter: none;
+}
+
+/* ============================================================
+   26. Responsive — 960px
+============================================================ */
+@media (max-width: 960px) {
+  :root {
+    --container-pad: 32px;
+  }
+
+  /* Nav */
+  .nav-links {
+    display: none;
+  }
+
+  /* Hero */
+  /* VSL sigue siendo 760px max — sin cambios a esta resolución */
+
+  /* Opportunity */
+  .opp-split {
+    flex-direction: column;
+  }
+
+  .opp-split-left {
+    width: 100%;
+    padding: 60px 32px;
+  }
+
+  .opp-split-right {
+    width: 100%;
+    min-height: 300px;
+  }
+
+  .opp-bresser-photo {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 200px;
+    margin: -100px auto 0;
+    display: block;
+  }
+
+  /* Brand Story */
+  .bs-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .bs-photo-wrap {
+    max-width: 340px;
+  }
+
+  /* Método */
+  .step-card {
+    padding: 40px 32px;
+    top: calc(80px + var(--card-index) * 16px);
+  }
+
+  /* Fundador */
+  .fundador-grid {
+    grid-template-columns: 1fr;
+    gap: 64px;
+  }
+
+  .fundador-photo-wrap {
+    max-width: 340px;
+  }
+
+  /* Módulos */
+  .modulos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .bonus-card {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* Proceso */
+  .proceso-body {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  /* Resultados */
+  .resultados-layout {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  /* Testimonios */
+  .testimonios-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Objeciones */
+  .objeciones-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Garantía */
+  .garantia-wrap {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 48px;
+  }
+
+  /* Final CTA */
+  .section-cta-final .container {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+
+  .cta-final-mockup {
+    max-width: 300px;
+  }
+}
+
+/* ============================================================
+   27. Responsive — 600px
+============================================================ */
+@media (max-width: 768px) {
+  .tv-card {
+    grid-template-columns: 1fr;
+  }
+
+  .tv-video {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+  }
+
+  .tv-text {
+    padding: 36px 28px;
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --container-pad: 24px;
+  }
+
+  /* Reducir padding de secciones */
+  .section-opportunity,
+  .section-brand-story,
+  .section-metodo,
+  .section-fundador,
+  .section-modulos,
+  .section-resultados,
+  .section-testimonios,
+  .section-offer,
+  .section-objeciones,
+  .section-garantia,
+  .section-faq,
+  .section-cta-final {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+
+  /* Hero — ajustar split a VSL más estrecho en móvil
+     A 600px: VSL ~552px → height ~310px → mitad ~155px */
+  .hero-top {
+    padding-bottom: 175px;
+  }
+
+  .hero-vsl-outer {
+    margin-top: -155px;
+    padding: 0 24px;
+  }
+
+  .hero-bottom {
+    padding-top: 195px;
+  }
+
+  /* Opportunity */
+  .opp-fullwidth {
+    height: 40vh;
+  }
+
+  .opp-block1 {
+    padding: 60px 0;
+  }
+
+  /* Módulos */
+  .modulos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Resultados */
+  .resultados-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Objeciones */
+  .objecion {
+    padding: 40px 28px;
+  }
+
+  /* Footer */
+  .footer-inner {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  /* Cursor: ocultar en touch */
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
