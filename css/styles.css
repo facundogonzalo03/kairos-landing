@@ -331,9 +331,9 @@ button {
 
 /* --- Bloque superior ---------------------------------------- */
 .hero-top {
-  background: url('../assets/imagenes/fondo_heroes.webp') center 70% / cover no-repeat;
+  background: url('../assets/imagenes/fondo_heroes_2.webp') center 40% / cover no-repeat;
   padding-top: 100px;
-  padding-bottom: 340px;
+  padding-bottom: 240px;
   text-align: center;
   color: var(--black);
 }
